@@ -1,0 +1,100 @@
+type: custom:apexcharts-card
+header:
+  title: Solar forecast
+  show: true
+  standard_format: true
+  show_states: true
+  colorize_states: true
+apex_config:
+  chart:
+    height: 350px
+  tooltip:
+    enabled: true
+    shared: true
+    followCursor: true
+graph_span: 24h
+span:
+  start: day
+series:
+  - entity: sensor.myenergi_fairburn_power_generation
+    name: Solar Power
+    type: line
+    stroke_width: 3
+    float_precision: 2
+    color: Orange
+    yaxis_id: kWh
+    unit: kW
+    transform: return x/1000;
+    extend_to: now
+    show:
+      legend_value: true
+      in_header: false
+    group_by:
+      func: avg
+      duration: 5m
+  - entity: sensor.solcast_pv_forecast_forecast_today
+    name: Solar Forecast (D1)
+    color: grey
+    opacity: 0.3
+    stroke_width: 0
+    type: area
+    extend_to: false
+    yaxis_id: kWh
+    show:
+      legend_value: false
+      in_header: false
+    data_generator: |
+      return entity.attributes.detailedForecast.map((entry) => {
+            return [new Date(entry.period_start), entry.pv_estimate];
+          });
+  - entity: sensor.myenergi_fairburn_generated_today
+    yaxis_id: header_only
+    name: Today Actual
+    stroke_width: 2
+    color: Orange
+    show:
+      legend_value: true
+      in_header: true
+      in_chart: false
+  - entity: sensor.solcast_pv_forecast_forecast_today
+    yaxis_id: header_only
+    name: Today Forecast
+    color: Grey
+    show:
+      legend_value: true
+      in_header: true
+      in_chart: false
+  - entity: sensor.solcast_pv_forecast_forecast_remaining_today_every_minute
+    yaxis_id: header_only
+    name: Remaining
+    color: Grey
+    show:
+      legend_value: true
+      in_header: true
+      in_chart: false
+  - entity: sensor.solcast_pv_forecast_api_last_polled
+    yaxis_id: header_only
+    name: Last update
+    color: red
+    unit: ' min.'
+    transform: return ((Date.now()) - (new Date(x).getTime())) / 60 / 60 / 24
+    show:
+      legend_value: true
+      in_header: true
+      in_chart: false
+yaxis:
+  - id: capacity
+    show: true
+    opposite: true
+    decimals: 0
+    max: 100
+    min: 0
+    apex_config:
+      tickAmount: 10
+  - id: kWh
+    show: true
+    min: 0
+    apex_config:
+      tickAmount: 10
+  - id: header_only
+    show: false
