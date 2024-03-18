@@ -16,7 +16,7 @@ graph_span: 24h
 span:
   start: day
 series:
-  - entity: sensor.myenergi_fairburn_power_generation
+  - entity: sensor.myenergi_power_generation
     name: Solar Power
     type: line
     stroke_width: 3
@@ -47,7 +47,7 @@ series:
       return entity.attributes.detailedForecast.map((entry) => {
             return [new Date(entry.period_start), entry.pv_estimate];
           });
-  - entity: sensor.myenergi_fairburn_generated_today
+  - entity: sensor.myenergi_generated_today
     yaxis_id: header_only
     name: Today Actual
     stroke_width: 2
