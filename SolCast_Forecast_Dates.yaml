@@ -1,0 +1,24 @@
+type: custom:card-templater
+entities:
+  - sensor.solcast_pv_forecast_forecast_day_3
+card:
+  type: entities
+  entities:
+    - entity: sensor.solcast_pv_forecast_forecast_today
+      name_template: '{{ (now()+timedelta(days=0)).strftime(''%A, %d %b %Y'') }}'
+    - entity: sensor.solcast_pv_forecast_forecast_tomorrow
+      name_template: '{{ (now()+timedelta(days=1)).strftime(''%A, %d %b %Y'') }}'
+    - entity: sensor.solcast_pv_forecast_forecast_day_3
+      name_template: '{{ (now()+timedelta(days=2)).strftime(''%A, %d %b %Y'') }}'
+    - entity: sensor.solcast_pv_forecast_forecast_day_4
+      name_template: '{{ (now()+timedelta(days=3)).strftime(''%A, %d %b %Y'') }}'
+    - entity: sensor.solcast_pv_forecast_forecast_day_5
+      name_template: '{{ (now()+timedelta(days=4)).strftime(''%A, %d %b %Y'') }}'
+    - entity: sensor.solcast_pv_forecast_forecast_day_6
+      name_template: '{{ (now()+timedelta(days=5)).strftime(''%A, %d %b %Y'') }}'
+    - entity: sensor.solcast_pv_forecast_forecast_day_7
+      name_template: '{{ (now()+timedelta(days=6)).strftime(''%A, %d %b %Y'') }}'
+    - entity: sensor.solcast_forecast_week
+  title: Solcast Forecast
+view_layout:
+  position: sidebar
